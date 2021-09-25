@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ConsoleApp1
 {
@@ -17,10 +17,30 @@ namespace ConsoleApp1
     // Generics
 
 
+    // Error Handling / Exception Handling
 
-    // Delegates
 
-    // Error Handling
+    //                  Object -> Exception
+
+    // Exception TYpes
+    // 1. System Exception
+    // 2. Appllication Exception
+
+    // System Extception Types
+
+    // NullReffrence Exception
+    // Invalid Operation Exception
+    // ArgumentException
+    // ArgumentNullException
+    // ArgumentOutOfRangeException
+    // DivideByZeroException
+    // FileNotFoundException
+    // FormatException
+    // IndexOutOfRageException
+    // OutOfMemoryException
+    // StackOverflowException
+    // TimeoutException
+
 
     // Lambda & Linq
 
@@ -75,10 +95,18 @@ namespace ConsoleApp1
 
         public void AddOrUpdate(int index, T item)
         {
-            if(index >= 0 && index < 10)
+            try
             {
-                _data[index] = item;
+                //if (index >= 0 && index < 10)
+                //{
+                    _data[index] = item;
+                //}
             }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine("Index out of range");
+            }
+            
         }
 
         public void AddOrUpdate(T data1, T data2)
@@ -118,34 +146,136 @@ namespace ConsoleApp1
         public string country { get; set; }
     }
 
-    class Generics
+
+    class Student
     {
-        static void Main(string[] args)
+        public int StudentID { get; set; }
+        public string  StudentName { get; set; }
+    }
+
+    [Serializable]
+    class InValidStudentNameException: System.Exception
+    {
+        public InValidStudentNameException() { }
+
+        public InValidStudentNameException(string name): base(String.Format("Invalid Student Name: {0}", name))
         {
 
-            List<Stokes> lstStokes = new List<Stokes>()
+        }
+    }
+
+    class Generics
+    {
+
+        public static void ValidateStudent(Student std)
+        {
+            Regex regex = new Regex("^[a-zA-Z]+$");
+            if(!regex.IsMatch(std.StudentName))
             {
-                new Stokes(){ key = "inf", name = "infosys", sector = "IT", country = "india" },
-                new Stokes(){ key = "rel", name = "reliance", sector = "chemical", country = "india" },
-                new Stokes(){ key = "mic", name = "microsoft", sector = "IT", country = "US" },
-                new Stokes(){ key = "ola", name = "Ola", sector = "Auto", country = "india" }
-            };
-
-            Dictionary<string, Stokes> dst = new Dictionary<string, Stokes>();
-            dst.Add("inf", new Stokes() { key = "inf", name = "infosys", sector = "IT", country = "india" });
-
-            dst.ContainsKey("inf")
-
-
-
-
-
-            lstStokes.ForEach(item =>
-            {
-
-            })
+                throw new InValidStudentNameException(std.StudentName);
+            }
+        }
+        static void Main(string[] args)
+        {
             
 
+
+            FileInfo file = null;
+            //try
+            //{
+            //    Console.Write("Enter a file name to write: ");
+            //    string fileName = Console.ReadLine();
+            //    file = new FileInfo(fileName);
+            //    file.AppendText();
+            //}
+            //catch (System.Exception)
+            //{
+            //    Console.WriteLine("");
+            //}
+            //finally
+            //{
+            //    file = null;
+            //}
+
+            //try
+            //{
+            //    Store<int> intStore = new Store<int>();
+            //    intStore.AddOrUpdate(12, 1);
+            //    Console.WriteLine(intStore.GetData(12));
+            //}
+            //catch (System.Exception ex)
+            //{
+
+            //    Console.WriteLine("Something Went wrong");
+            //}
+
+            //try
+            //{
+            //    int num = int.Parse(Console.ReadLine());
+            //    int result = 100 / num;
+            //    Console.WriteLine("100 / {0} = {1}", num, result);
+            //}
+            //catch (DivideByZeroException ex)
+            //{
+            //    Console.WriteLine("Can not devide by zero, Please Try Again");
+            //}
+            //catch(NullReferenceException ex)
+            //{
+            //    Console.WriteLine("Invalid Operation, Please Try Again");
+            //}
+            //catch(FormatException ex)
+            //{
+            //    Console.WriteLine("Not a Valid Format...");
+            //}
+            //catch
+            //{
+            //    Console.WriteLine("Something went wrong...");
+            //}
+
+
+            //Student newStudent = null;
+            //try
+            //{
+            //    newStudent = new Student();
+            //    newStudent.StudentID = 1;
+            //    newStudent.StudentName = "Yagnesh007";
+            //    ValidateStudent(newStudent);
+            //}
+            //catch (System.Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
+
+            //try
+            //{
+
+            //    Console.WriteLine("Enter a Number:");
+
+            //    var num = int.Parse(Console.ReadLine());
+
+            //    Console.WriteLine($"Squre of {num} is {num * num}");
+            //}
+            //catch(System.Exception ex)
+            //{
+            //    Console.WriteLine("Error Info" + ex.Message);
+            //}
+
+            //List<Stokes> lstStokes = new List<Stokes>()
+            //{
+            //    new Stokes(){ key = "inf", name = "infosys", sector = "IT", country = "india" },
+            //    new Stokes(){ key = "rel", name = "reliance", sector = "chemical", country = "india" },
+            //    new Stokes(){ key = "mic", name = "microsoft", sector = "IT", country = "US" },
+            //    new Stokes(){ key = "ola", name = "Ola", sector = "Auto", country = "india" }
+            //};
+
+            //Dictionary<string, Stokes> dst = new Dictionary<string, Stokes>();
+            //dst.Add("inf", new Stokes() { key = "inf", name = "infosys", sector = "IT", country = "india" });
+
+            //Stokes stk = null;
+
+            //Console.WriteLine(stk.name);
+
+            //dst.ContainsKey("inf")
 
             //SortedList<int, string> lst = new SortedList<int, string>();
 
@@ -158,26 +288,32 @@ namespace ConsoleApp1
             //}
 
             // LILO
-            Stack<int> myStack = new Stack<int>();
+            //Stack<int> myStack = new Stack<int>();
 
-            myStack.Push(1);
-            myStack.Push(2);
+            //myStack.Push(1);
+            //myStack.Push(2);
 
-            myStack.Pop();
+            //myStack.Pop();
 
             //FIFo
 
-            Queue<int> myQ = new Queue<int>();
+            //Queue<int> myQ = new Queue<int>();
 
-            myQ.Enqueue(1);
-            myQ.Enqueue(2);
+            //myQ.Enqueue(1);
+            //myQ.Enqueue(2);
 
-            myQ.Dequeue();
+            //myQ.Dequeue();
 
 
-            Hashtable names = new Hashtable();
+            //Hashtable names = new Hashtable();
 
-            names.Add("abc", 2);
+            //names.Add("abc", 2);
+
+            //using(WebClient httpClient = new WebClient())
+            //{
+            //    HttpWebRequest request = null;
+            //    request.Timeout = 1000;
+            //}
 
             //Temp temp = new Temp();
             //Console.WriteLine("i: " + temp.id);
